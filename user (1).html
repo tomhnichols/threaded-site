@@ -61,35 +61,30 @@
   <h1>Threaded</h1>
   <div class="card">
     <h2>Connect with the wearer</h2>
-    <div class="links" id="links"></div>
+    <div class="links" id="links">Loading...</div>
     <button class="back-button" onclick="window.location.href='index.html'">← Back</button>
   </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const linksDiv = document.getElementById('links');
+    linksDiv.innerHTML = '';
 
-    const data = {
-      'THN04': {
-        instagram: 'tomhnichols',
-        snapchat: 'tomhnichols'
-      },
-      'RHN1963': {
-        x: 'NicholsAuthor'
-      }
-    };
+    if (params.has('instagram')) {
+      const ig = params.get('instagram');
+      linksDiv.innerHTML += `<a href="https://instagram.com/${ig}" target="_blank">Instagram</a>`;
+    }
+    if (params.has('snapchat')) {
+      const sc = params.get('snapchat');
+      linksDiv.innerHTML += `<a href="https://www.snapchat.com/add/${sc}" target="_blank">Snapchat</a>`;
+    }
+    if (params.has('x')) {
+      const x = params.get('x');
+      linksDiv.innerHTML += `<a href="https://x.com/${x}" target="_blank">X</a>`;
+    }
 
-    for (const [key, value] of params.entries()) {
-      if (value === 'tomhnichols') {
-        linksDiv.innerHTML = `
-          <a href="https://instagram.com/${value}" target="_blank">Instagram</a>
-          <a href="https://www.snapchat.com/add/${value}" target="_blank">Snapchat</a>
-        `;
-      } else if (value === 'NicholsAuthor') {
-        linksDiv.innerHTML = `
-          <a href="https://x.com/${value}" target="_blank">X</a>
-        `;
-      }
+    if (linksDiv.innerHTML === '') {
+      linksDiv.innerHTML = '<p>No social links found for this user.</p>';
     }
   </script>
 </body>
